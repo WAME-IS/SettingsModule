@@ -1,0 +1,7 @@
+<div class="list-group">
+	{foreach $types as $position}
+		<a n:foreach="$position as $typeName => $type" href="{plink this, 'id' => $typeName}" class="list-group-item">
+			{$type->getTitle()}
+		</a>
+	{/foreach}
+</div>
