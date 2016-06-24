@@ -76,16 +76,6 @@ class BaseSettingsFormContainer extends BaseFormContainer
 		}
 	}
 
-	
-	/**
-	 * Form container template
-	 */
-	public function render() 
-	{
-        $this->template->_form = $this->getForm();
-        $this->template->render(__DIR__ . '/default.latte');
-    }
-
 
 	/**
 	 * Set default value
