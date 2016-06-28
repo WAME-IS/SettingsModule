@@ -59,7 +59,7 @@ class BaseSettingsFormContainer extends BaseFormContainer
 				$settingsEntity = $form->parent->settingsEntity[$inputName];
 				$settingsEntity->setValue($value);
 				$settingsEntity->setEditDate(new \DateTime('now'));
-				$settingsEntity->setEditUser($form->parent->yourUserEntity);
+				$settingsEntity->setEditUser($form->parent->user->getEntity());
 
 				$this->settingsRepository->update($settingsEntity);
 			}
@@ -70,7 +70,7 @@ class BaseSettingsFormContainer extends BaseFormContainer
 			$settingsEntity->setStatus(SettingsRepository::STATUS_ACTIVE);
 			$settingsEntity->setValue($value);
 			$settingsEntity->setEditDate(new \DateTime('now'));
-			$settingsEntity->setEditUser($form->parent->yourUserEntity);
+			$settingsEntity->setEditUser($form->parent->user->getEntity());
 			
 			$this->settingsRepository->create($settingsEntity);
 		}
