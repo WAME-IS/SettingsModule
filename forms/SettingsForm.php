@@ -2,12 +2,14 @@
 
 namespace Wame\SettingsModule\Forms;
 
-use Nette\Application\UI\Form;
+use Exception;
 use Kdyby\Doctrine\EntityManager;
-use Wame\Utils\Strings;
+use Nette\Application\AbortException;
+use Nette\Application\UI\Form;
 use Wame\Core\Forms\FormFactory;
 use Wame\SettingsModule\Entities\SettingsEntity;
 use Wame\SettingsModule\Repositories\SettingsRepository;
+use Wame\Utils\Strings;
 
 
 class SettingsForm extends FormFactory
@@ -83,8 +85,8 @@ class SettingsForm extends FormFactory
 
 			$presenter->flashMessage(_('Settings has been successfully updated.'), 'success');
 			$presenter->redirect('this');
-		} catch (\Exception $e) {
-			if ($e instanceof \Nette\Application\AbortException) {
+		} catch (Exception $e) {
+			if ($e instanceof AbortException) {
 				throw $e;
 			}
 			
