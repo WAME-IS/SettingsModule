@@ -15,11 +15,6 @@ services:
 	- Wame\SettingsModule\Components\ISettingsMenuControlFactory
 	- Wame\SettingsModule\Forms\SettingsForm
 
-
-	# Entities
-	- Wame\SettingsModule\Entities\SettingsEntity
-
-
 	# Repositories
 	- Wame\SettingsModule\Repositories\SettingsRepository
 
