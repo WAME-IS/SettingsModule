@@ -37,7 +37,5 @@ class SettingsMenuControl extends BaseControl
     public function render()
     {
         $this->template->types = $this->settingsManager;
-
-        $this->componentRender();
     }
 }
