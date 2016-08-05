@@ -7,7 +7,7 @@ use Wame\Utils\Arrays;
 use Wame\Utils\Strings;
 
 
-abstract class SettingsType extends FormFactory
+abstract class SettingsGroup extends FormFactory
 {	
 	/** @var array */
 	public $services = [];

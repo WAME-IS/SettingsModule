@@ -1,130 +1,64 @@
-<?php 
+<?php
 
 namespace Wame\SettingsModule\Models;
 
-use Wame\Utils\Strings;
+use Nette\InvalidArgumentException;
+use Nette\Object;
+use Nette\Utils\ArrayHash;
+use Wame\SettingsModule\Repositories\SettingsRepository;
 
-class SettingsManager
+class SettingsManager extends Object
 {
-	const DEFAULT_TYPE = 'General';
-	
-    /** @var array */
-    public $types = [];
 
-    /** @var array */
-    private $removeTypes = [];
-    
-    
+    /** @var SettingsRepository */
+    private $settingsRepository;
+
+    /** @var SettingsGroupManager */
+    private $settingsGroupManager;
+
+    /** @var ArrayHash[] */
+    private $cache;
+
+    public function __construct(SettingsRepository $settingsRepository, SettingsGroupManager $settingsGroupManager)
+    {
+        $this->settingsRepository = $settingsRepository;
+        $this->settingsGroupManager = $settingsGroupManager;
+    }
+
     /**
-     * Add type
+     * Get group of settings.
      * 
-     * @param object $service
+     * For example $settingsManager->general->customTemplate will return
+     * setting named "customTemplate" in group "general".
+     * 
      * @param string $name
-     * @param int $priority
-	 * @return \Wame\SettingsModule\Components\SettingsManager
-	 */
-    public function addType($service, $name = null, $priority = 0)
-    {
-        if (!$name) {
-            $name = Strings::getClassName($service);
-        }
-
-        $this->types[$name] = [
-            'name' => $name,
-            'priority' => $priority,
-            'service' => $service
-        ];
-
-        return $this;
-    }
-
-
-    /**
-     * Remove type
-     * 
-     * @param mixed $name
-	 * @return \Wame\SettingsModule\Components\SettingsManager
-	 */
-    public function removeType($name)
-    {
-        if (is_object($name)) {
-            $name = Strings::getClassName($name);
-        }
-
-        $this->removeItems[$name] = $name;
-
-        return $this;
-    }
-
-
-    /**
-     * Remove types
-     * 
-     * @return array
+     * @return ArrayHash All settings in group
+     * @throws InvalidArgumentException
      */
-    private function removeTypes()
+    public function getTypeSettings($name)
     {
-        $types = $this->types;
+        if (!array_key_exists($name, $this->cache)) {
 
-        foreach ($this->removeTypes as $type) {
-            if (array_key_exists($type, $types)) {
-                unset($types[$type]);
+            if (!in_array($name, $this->settingsGroupManager->getAll())) {
+                throw new InvalidArgumentException("Settings type isn't declared.");
             }
+
+            $settings = [];
+            foreach ($this->settingsRepository->find(['type' => $name]) as $entity) {
+                $settings[$entity->name] = $entity->value;
+            }
+            $this->cache[$name] = ArrayHash::from($settings);
         }
-
-        return $types;
+        return $this->cache[$name];
     }
-
 
     /**
-     * Get items
+     * Get group of settings.
      * 
-     * @return array
+     * @param string $name Name of type
      */
-    public function getTypes()
+    public function &__get($name)
     {
-        $types = $this->removeTypes();
-
-        return $this->sortTypes($types);
+        return $this->getTypeSettings($name);
     }
-
-
-    /**
-     * Sort types
-     * 
-     * @param array $types
-     * @return array
-     */
-    private function sortTypes($types)
-    {
-        $return = [];
-
-        foreach ($types as $type) {
-            $return[$type['priority']][$type['name']] = $type['service']; 
-        }
-
-        // Sort by priority
-        krsort($return);
-
-        return $return;
-    }
-
-	
-//    /**
-//     * Add form containers from type
-//     * 
-//     * @param SettingsForm $settingsForm
-//     * @return SettingsForm
-//     */
-//    public function addFormContainers($settingsForm)
-//    {
-//		$type = $settingsForm->id;
-//
-//		if (isset($this->types[$type]) && method_exists($this->types[$type]['service'], 'addFormContainers')) {
-//			$settingsForm->addFormContainers($this->types[$type]['service']->getFormContainers());
-//		}
-//
-//        return $settingsForm;
-//    }
-
 }

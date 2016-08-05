@@ -31,7 +31,11 @@ class SettingsRepository extends BaseRepository
 	 */
 	public function create($settingsEntity)
 	{
-		$this->entityManager->persist($settingsEntity);
+		$create = $this->entityManager->persist($settingsEntity);
+		
+		if (!$create) {
+			throw new \Wame\Core\Exception\RepositoryException(_('Settings could not be created.'));
+		}
 		
 		return $settingsEntity;
 	}
