@@ -2,9 +2,10 @@
 
 namespace Wame\SettingsModule\Components;
 
+use Nette\DI\Container;
 use Wame\Utils\HttpRequest;
 use Wame\AdminModule\Components\BaseControl;
-use Wame\SettingsModule\Models\SettingsManager;
+use Wame\SettingsModule\Registers\SettingsGroupRegister;
 
 
 interface ISettingsMenuControlFactory
@@ -16,20 +17,21 @@ interface ISettingsMenuControlFactory
 
 class SettingsMenuControl extends BaseControl
 {
-	/** @var SettingsManager */
-	private $settingsManager;
+	/** @var SettingsGroupRegister */
+	private $settingsGroupRegister;
 	
 	/** @var integer */
 	private $id;
 	
 	
 	public function __construct(
+        Container $container,
 		HttpRequest $httpRequest,
-		SettingsManager $settingsManager
+		SettingsGroupRegister $settingsGroupRegister
 	) {
-		parent::__construct();
+		parent::__construct($container);
 		
-		$this->settingsManager = $settingsManager->getTypes();
+		$this->settingsGroupRegister = $settingsGroupRegister;
 
 		$this->id = $httpRequest->getParameter('id');
 	}
@@ -37,9 +39,7 @@ class SettingsMenuControl extends BaseControl
 	
 	public function render()
 	{
-		$this->template->types = $this->settingsManager;
-
-		$this->componentRender();
+		$this->template->types = $this->settingsGroupRegister->getAll();
 	}
 
 }

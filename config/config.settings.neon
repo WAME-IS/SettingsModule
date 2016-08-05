@@ -19,8 +19,9 @@ services:
 
     SettingsManager:
         class: Wame\SettingsModule\Models\SettingsManager
-    SettingsTypeManager:
-        class: Wame\SettingsModule\Models\SettingsGroupManager
+
+    SettingsGroupRegister:
+        class: Wame\SettingsModule\Registers\SettingsGroupRegister
 
 
 doctrine:

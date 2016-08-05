@@ -6,6 +6,7 @@ use Wame\SettingsModule\Repositories\SettingsRepository;
 use Wame\SettingsModule\Models\SettingsManager;
 use Wame\SettingsModule\Components\SettingsMenuControl;
 use Wame\SettingsModule\Components\ISettingsMenuControlFactory;
+use Wame\SettingsModule\Registers\SettingsGroupRegister;
 
 
 class SettingsPresenter extends BasePresenter
@@ -15,6 +16,9 @@ class SettingsPresenter extends BasePresenter
 	
 	/** @var SettingsManager @inject */
 	public $settingsManager;
+    
+    /** @var SettingsGroupRegister @inject */
+    public $settingsGroupRegister;
 	
 	/** @var ISettingsMenuControlFactory @inject */
 	public $ISettingsMenuControlFactory;
@@ -43,7 +47,7 @@ class SettingsPresenter extends BasePresenter
 			$this->id = SettingsManager::DEFAULT_TYPE;
 		}
 
-		if (!isset($this->settingsManager->types[$this->id])) {
+		if (!$this->settingsGroupRegister->getByName($this->id)) {
 			$this->flashMessage(_('This section does not exist in SettingsManager.'), 'danger');
 			$this->redirect(':Admin:Settings:', ['id' => null]);			
 		}
@@ -69,11 +73,11 @@ class SettingsPresenter extends BasePresenter
 	 */
 	private function setType()
 	{
-		$this->settingsType = $this->settingsManager->types[$this->id];
+		$this->settingsType = $this->settingsGroupRegister->getByName($this->id);
 		$this->settingsEntity = $this->settingsRepository->getList(['type' => $this->id], 'name');
 
-		if (method_exists($this->settingsType['service'], 'getServices')) {
-			$this->components = $this->settingsType['service']->getServices();
+		if (method_exists($this->settingsType, 'getServices')) {
+			$this->components = $this->settingsType->getServices();
 			$this->addComponents($this->components);
 		}
 	}
@@ -99,7 +103,7 @@ class SettingsPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$this->template->siteTitle = $this->settingsType['service']->getTitle();
+		$this->template->siteTitle = $this->settingsType->getTitle();
 		$this->template->components = $this->components;
 	}
 	

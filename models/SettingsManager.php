@@ -6,23 +6,25 @@ use Nette\InvalidArgumentException;
 use Nette\Object;
 use Nette\Utils\ArrayHash;
 use Wame\SettingsModule\Repositories\SettingsRepository;
+use Wame\SettingsModule\Registers\SettingsGroupRegister;
 
 class SettingsManager extends Object
 {
+    const DEFAULT_TYPE = 'General';
 
     /** @var SettingsRepository */
     private $settingsRepository;
 
-    /** @var SettingsGroupManager */
-    private $settingsGroupManager;
+    /** @var SettingsGroupRegister */
+    private $settingsGroupRegister;
 
-    /** @var ArrayHash[] */
-    private $cache;
+    /** @var array */
+    private $cache = [];
 
-    public function __construct(SettingsRepository $settingsRepository, SettingsGroupManager $settingsGroupManager)
+    public function __construct(SettingsRepository $settingsRepository, SettingsGroupRegister $settingsGroupRegister)
     {
         $this->settingsRepository = $settingsRepository;
-        $this->settingsGroupManager = $settingsGroupManager;
+        $this->settingsGroupRegister = $settingsGroupRegister;
     }
 
     /**
@@ -39,8 +41,8 @@ class SettingsManager extends Object
     {
         if (!array_key_exists($name, $this->cache)) {
 
-            if (!in_array($name, $this->settingsGroupManager->getAll())) {
-                throw new InvalidArgumentException("Settings type isn't declared.");
+            if (!$this->settingsGroupRegister->getByName($name)) {
+                throw new InvalidArgumentException("Settings type [$name] isn't declared.");
             }
 
             $settings = [];

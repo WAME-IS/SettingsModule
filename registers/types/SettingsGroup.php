@@ -1,25 +1,51 @@
 <?php
 
-namespace Wame\SettingsModule\Models;
+namespace Wame\SettingsModule\Registers\Types;
 
 use Wame\Core\Forms\FormFactory;
 use Wame\Utils\Arrays;
 use Wame\Utils\Strings;
+use Wame\Core\Registers\Types\IRegisterType;
 
 
-abstract class SettingsGroup extends FormFactory
+abstract class SettingsGroup extends FormFactory implements IRegisterType
 {	
 	/** @var array */
 	public $services = [];
 
     /** @var array */
     private $removeServices = [];
+    
+    /** @var string */
+    private $alias;
 	
 	
 	/**
 	 * Get settings type title
 	 */
 	abstract public function getTitle();
+    
+    
+    /**
+     * Set alias
+     * 
+     * @param string $alias alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    }
+    
+    /**
+     * Return alias
+     * 
+     * @return string   alias
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+    
 	
 	/**
 	 * Get components (forms, controls...)
