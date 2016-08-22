@@ -23,10 +23,10 @@ class SettingsGroupRegister extends \Wame\Core\Registers\PriorityRegister
         return \Wame\Utils\Arrays::sortByPriority($types);
     }
     
-    public function add($service, $name = null, $priority = 0)
+    public function add($service, $name = null, $parameters = [])
     {
         $service->setAlias($name);
-        parent::add($service, $name, $priority);
+        parent::add($service, $name, $parameters);
     }
     
 }
