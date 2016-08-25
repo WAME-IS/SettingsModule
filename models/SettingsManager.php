@@ -61,6 +61,7 @@ class SettingsManager extends Object
      */
     public function &__get($name)
     {
-        return $this->getTypeSettings($name);
+        $a = $this->getTypeSettings($name);
+        return $a;
     }
 }
