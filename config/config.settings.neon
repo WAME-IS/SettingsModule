@@ -15,7 +15,9 @@ services:
     - Wame\SettingsModule\Forms\SettingsForm
 
     # Repositories
-    - Wame\SettingsModule\Repositories\SettingsRepository
+    SettingsRepository:
+        class: Wame\SettingsModule\Repositories\SettingsRepository
+        inject: yes
 
     SettingsManager:
         class: Wame\SettingsModule\Models\SettingsManager
