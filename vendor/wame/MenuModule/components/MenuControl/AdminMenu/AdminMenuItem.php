@@ -34,18 +34,18 @@ class AdminMenuItem implements IMenuItem
 		$item->setIcon('fa fa-cog');
 		$item->setLink($this->linkGenerator->link('Admin:Settings:', ['id' => null]));
 		
-//		$item->addNode($this->shopProductDefault(), 'priceGroup');
+		$item->addNode($this->settingsGeneral(), 'general');
 		
 		return $item->getItem();
 	}
 	
 	
-	private function shopProductDefault()
+	private function settingsGeneral()
 	{
 		$item = new Item();
-		$item->setName('shop-priceGroup');
-		$item->setTitle(_('Price groups'));
-		$item->setLink($this->linkGenerator->link('Admin:PriceGroup:', ['id' => null]));
+		$item->setName('settings-general');
+		$item->setTitle(_('General'));
+		$item->setLink($this->linkGenerator->link('Admin:Settings:', ['id' => 'General']));
 		
 		return $item->getItem();
 	}
