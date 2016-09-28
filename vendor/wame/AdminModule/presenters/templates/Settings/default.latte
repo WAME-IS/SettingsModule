@@ -1,24 +1,8 @@
 {block content}
-	<div class="page-header">
-		<h1>
-			{_'Settings'}
-			<small>
-				<span class="fa fa-angle-right"></span>
-				{$siteTitle}
-			</small>
-		</h1>
-	</div>
-	
-	<div class="row">
-		<div class="col-sm-4 col-lg-3">
-			{control settingsMenu}
-		</div>
-		
-		<div class="col-sm-8 col-lg-9">
-			{foreach $components as $priority}
-				{foreach $priority as $componentName => $component}
-					{control $componentName}
-				{/foreach}
-			{/foreach}
-		</div>
-	</div>
+<div class="page page-settings">
+    {foreach $components as $priority}
+        {foreach $priority as $componentName => $component}
+            {control $componentName}
+        {/foreach}
+    {/foreach}
+</div>
