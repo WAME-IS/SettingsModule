@@ -64,4 +64,27 @@ class SettingsManager extends Object
         $a = $this->getTypeSettings($name);
         return $a;
     }
+    
+    public function get($type, $name)
+    {
+        if (!array_key_exists($type, $this->cache)) {
+
+            if (!$this->settingsGroupRegister->getByName($type)) {
+                return null;
+            }
+
+            $settings = [];
+            foreach ($this->settingsRepository->find(['type' => $type]) as $entity) {
+                $settings[$entity->name] = $entity->value;
+            }
+            $this->cache[$type] = ArrayHash::from($settings);
+        }
+        
+        if(property_exists($this->cache[$type], $name)) {
+            return $this->cache[$type]->$name;
+        }
+        
+        return null;
+    }
+    
 }
