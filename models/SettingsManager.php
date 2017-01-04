@@ -12,6 +12,7 @@ class SettingsManager extends Object
 {
     const DEFAULT_TYPE = 'General';
 
+
     /** @var SettingsRepository */
     private $settingsRepository;
 
@@ -21,11 +22,13 @@ class SettingsManager extends Object
     /** @var array */
     private $cache = [];
 
+
     public function __construct(SettingsRepository $settingsRepository, SettingsGroupRegister $settingsGroupRegister)
     {
         $this->settingsRepository = $settingsRepository;
         $this->settingsGroupRegister = $settingsGroupRegister;
     }
+
 
     /**
      * Get group of settings.
@@ -56,16 +59,24 @@ class SettingsManager extends Object
 
     /**
      * Get group of settings.
-     * 
+     *
      * @param string $name Name of type
+     * @return mixed|ArrayHash
      */
     public function &__get($name)
     {
         $a = $this->getTypeSettings($name);
         return $a;
     }
-    
-    public function get($type, $name)
+
+    /**
+     * Get
+     *
+     * @param string $type
+     * @param string $name
+     * @return mixed
+     */
+    public function get(string $type, string $name = null)
     {
         if (!array_key_exists($type, $this->cache)) {
 
@@ -79,11 +90,15 @@ class SettingsManager extends Object
             }
             $this->cache[$type] = ArrayHash::from($settings);
         }
-        
-        if(property_exists($this->cache[$type], $name)) {
-            return $this->cache[$type]->$name;
+
+        if(!empty($this->cache)) {
+            if ($name && property_exists($this->cache[$type], $name)) {
+                return $this->cache[$type]->$name;
+            }
+
+            return $this->cache[$type];
         }
-        
+
         return null;
     }
     
