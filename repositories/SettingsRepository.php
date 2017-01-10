@@ -2,6 +2,7 @@
 
 namespace Wame\SettingsModule\Repositories;
 
+use Wame\Core\Exception\RepositoryException;
 use Wame\Core\Repositories\BaseRepository;
 use Wame\SettingsModule\Entities\SettingsEntity;
 
@@ -20,27 +21,27 @@ class SettingsRepository extends BaseRepository
 	/**
 	 * Create settings
 	 * 
-	 * @param SettingsEntity $settingsEntity
+	 * @param SettingsEntity $settingsEntity entity
 	 * @return SettingsEntity
-	 * @throws \Wame\Core\Exception\RepositoryException
+	 * @throws RepositoryException
 	 */
 	public function create($settingsEntity)
 	{
 		$create = $this->entityManager->persist($settingsEntity);
 		
 		if (!$create) {
-			throw new \Wame\Core\Exception\RepositoryException(_('Settings could not be created.'));
+			throw new RepositoryException(_('Settings could not be created.'));
 		}
 		
 		return $settingsEntity;
 	}
 
-
-	/**
-	 * Update settings
-	 * 
-	 * @param SettingsEntity $settingsEntity
-	 */
+    /**
+     * Update settings
+     *
+     * @param SettingsEntity $settingsEntity
+     * @return SettingsEntity
+     */
 	public function update($settingsEntity)
 	{
 		return $settingsEntity;
