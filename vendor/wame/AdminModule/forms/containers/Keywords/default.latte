@@ -1,0 +1,6 @@
+<div class="form-group">
+    {label $container['keywords']/}
+    <input class="form-control" n:name="$container['keywords']">
+    {var $description = $container['keywords']->getOption('description')}
+    <span n:if="$description" class="help-block">{$description}</span>
+</div>

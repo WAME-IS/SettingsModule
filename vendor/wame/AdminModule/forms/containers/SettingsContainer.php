@@ -9,7 +9,8 @@ abstract class SettingsContainer extends BaseContainer
     /** {@inheritdoc} */
     public function configure()
     {
-        $this->addText($this->getSettingsName(), $this->getSettingsTitle());
+        $this->addText($this->getSettingsName(), $this->getSettingsTitle())
+            ->setOption('description', $this->getSettingsDescription());
     }
 
     /** {@inheritDoc} */
@@ -50,5 +51,12 @@ abstract class SettingsContainer extends BaseContainer
      * @return string
      */
     abstract protected function getSettingsTitle();
+
+    /**
+     * Get settings description
+     *
+     * @return string
+     */
+    protected function getSettingsDescription() {}
 
 }

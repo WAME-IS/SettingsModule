@@ -22,6 +22,16 @@ abstract class AbstractSettingsPresenter extends BasePresenter
     }
 
 
+    /** renders ***************************************************************/
+
+    /**
+     * Render default
+     */
+    public function renderDefault()
+    {
+        $this->template->siteTitle = _('Settings');
+    }
+
     /** components ************************************************************/
 
     /**

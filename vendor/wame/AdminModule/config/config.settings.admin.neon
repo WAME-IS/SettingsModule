@@ -1,0 +1,19 @@
+services:
+
+    # Form containers
+    - Wame\SettingsModule\Vendor\Wame\AdminModule\Forms\Containers\ISiteTitleContainerFactory
+    - Wame\SettingsModule\Vendor\Wame\AdminModule\Forms\Containers\IDescriptionContainerFactory
+    - Wame\SettingsModule\Vendor\Wame\AdminModule\Forms\Containers\IKeywordsContainerFactory
+
+
+    # Forms
+    Admin.GeneralSettingsFormBuilder:
+        class: Wame\DynamicObject\Forms\RowFormBuilder
+        setup:
+            - setRepository(@SettingsRepository)
+            - setCriteria({type: general})
+            - add(@Wame\DynamicObject\Forms\Groups\IBasicGroupFactory, BasicGroup, {priority: 100})
+            - add(@Wame\SettingsModule\Vendor\Wame\AdminModule\Forms\Containers\ISiteTitleContainerFactory, SiteTitleContainer, {priority: 90})
+            - add(@Wame\SettingsModule\Vendor\Wame\AdminModule\Forms\Containers\IDescriptionContainerFactory, DescriptionContainer, {priority: 80})
+            - add(@Wame\SettingsModule\Vendor\Wame\AdminModule\Forms\Containers\IKeywordsContainerFactory, KeywordsContainer, {priority: 70})
+            - add(@Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory, SubmitContainer, {priority: 0})

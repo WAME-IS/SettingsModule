@@ -8,7 +8,12 @@ use Wame\SettingsModule\Components\SettingsMenuControl;
 use Wame\SettingsModule\Components\ISettingsMenuControlFactory;
 use Wame\SettingsModule\Registers\SettingsGroupRegister;
 
-
+/**
+ * Class SettingsPresenter
+ * @package App\AdminModule\Presenters
+ *
+ * @deprecated
+ */
 class SettingsPresenter extends BasePresenter
 {
 	/** @var SettingsRepository @inject */
