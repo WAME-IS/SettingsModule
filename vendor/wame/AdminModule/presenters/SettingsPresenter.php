@@ -4,8 +4,7 @@ namespace App\AdminModule\Presenters;
 
 use Wame\SettingsModule\Repositories\SettingsRepository;
 use Wame\SettingsModule\Models\SettingsManager;
-use Wame\SettingsModule\Components\SettingsMenuControl;
-use Wame\SettingsModule\Components\ISettingsMenuControlFactory;
+//use Wame\SettingsModule\Components\SettingsMenuControl;
 use Wame\SettingsModule\Registers\SettingsGroupRegister;
 
 /**
@@ -24,9 +23,9 @@ class SettingsPresenter extends BasePresenter
     
     /** @var SettingsGroupRegister @inject */
     public $settingsGroupRegister;
-	
-	/** @var ISettingsMenuControlFactory @inject */
-	public $ISettingsMenuControlFactory;
+
+//	/** @var ISettingsMenuControlFactory @inject */
+//	public $ISettingsMenuControlFactory;
 	
 	/** @var array */
 	public $settingsEntity;
@@ -62,15 +61,16 @@ class SettingsPresenter extends BasePresenter
 
 	/**
 	 * Settings menu control
-	 * 
+	 *
 	 * @return SettingsMenuControl
+     * @deprecated
 	 */
-	protected function createComponentSettingsMenu()
-	{
-		$control = $this->ISettingsMenuControlFactory->create();
-		
-		return $control;
-	}
+//	protected function createComponentSettingsMenu()
+//	{
+//		$control = $this->ISettingsMenuControlFactory->create();
+//
+//		return $control;
+//	}
 
 	
 	/**

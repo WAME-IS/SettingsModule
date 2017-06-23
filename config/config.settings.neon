@@ -11,7 +11,7 @@ services:
             - addResourceAction('admin.settings', 'delete')
             - allow('admin', 'admin.settings', 'delete')
 
-    - Wame\SettingsModule\Components\ISettingsMenuControlFactory
+#    - Wame\SettingsModule\Components\ISettingsMenuControlFactory
     - Wame\SettingsModule\Forms\SettingsForm
 
     # Repositories
@@ -19,11 +19,14 @@ services:
         class: Wame\SettingsModule\Repositories\SettingsRepository
         inject: yes
 
+
     SettingsManager:
         class: Wame\SettingsModule\Models\SettingsManager
 
+
     SettingsGroupRegister:
         class: Wame\SettingsModule\Registers\SettingsGroupRegister
+
 
 
 doctrine:
