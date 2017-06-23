@@ -1,16 +1,4 @@
 services:
-    PermissionObject:
-        setup:
-            - addResource('admin.settings')
-            - addResourceAction('admin.settings', 'view')
-            - allow('moderator', 'admin.settings', 'view')
-            - addResourceAction('admin.settings', 'create')
-            - allow('admin', 'admin.settings', 'create')
-            - addResourceAction('admin.settings', 'edit')
-            - allow('moderator', 'admin.settings', 'edit')
-            - addResourceAction('admin.settings', 'delete')
-            - allow('admin', 'admin.settings', 'delete')
-
 #    - Wame\SettingsModule\Components\ISettingsMenuControlFactory
     - Wame\SettingsModule\Forms\SettingsForm
 
